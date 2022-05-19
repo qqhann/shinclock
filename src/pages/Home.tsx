@@ -1,13 +1,11 @@
-
-import React, { useState } from "react";
-import { useIntervalWhen, useToggle } from "rooks";
+import React from "react";
 import { useRooms } from "../hooks/room";
 
-export const Home = ()=> {
-	const {create} = useRooms()
-	const onCreateRoom = ()=>{
-		create()
-	}
+export const Home = () => {
+  const { create } = useRooms();
+  const onCreateRoom = () => {
+    create();
+  };
 
   return (
     <div className="h-full">
@@ -15,5 +13,4 @@ export const Home = ()=> {
       <button onClick={onCreateRoom}>Create new room</button>
     </div>
   );
-}
-
+};
