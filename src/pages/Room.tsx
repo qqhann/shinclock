@@ -1,41 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useIntervalWhen, useToggle } from "rooks";
 import { useParams } from "react-router-dom";
+import {useClocks} from '../hooks/clock'
+
+
 
 export const Room = () => {
+    /*
+     * Clock
+     * running
+     * start time
+     * total seconds
+     * 
+     * useIntervalWhen
+     * remaining = total seconds - (now - start)
+     * format remaining to string
+     * これで
+     */
     const start = new Date();
-    const [diff, setDiff] = useState<number>(0);
-    const [isOn, toggle] = useToggle();
+    
+    const [second, setSecond] = useState<number>(0);
+    
+    const [isOn, toggle] = useToggle()
+    const {roomId} = useParams()
+    const {clocks, create} = useClocks(roomId)
+    
+    useEffect(()=>{
+        console.log(roomId)
+    },[roomId])
 
     useIntervalWhen(
         () => {
-            setDiff((old) => old + 1);
+            // countDown()
         },
         1000,
         isOn,
         true
     );
 
-    const { id } = useParams()
 
     return (
-        <div className="h-full w-full bg-slate-50">
+        <div className="h-screen w-screen bg-slate-50">
             <h1 className="text-3xl">ShinClock</h1>
 
             <div className="flex font-sans">
                 <div className="flex-auto p-6">
-                    <p>{id}</p>
+                    <p>{roomId}</p>
                 </div>
             </div>
 
             <div className="flex font-sans">
-                <div className="flex-auto p-3">
+                <button onClick={create}>create clock</button>
+                {clocks?.map(clock=><span>{clock.name}</span>)}
+                
+                <div className="p-3 bg-white rounded-lg shadow-md">
                     <div className="flex flex-wrap">
                         <h1 className="flex-auto text-lg font-semibold text-slate-900">
                             やっていく
                         </h1>
                         <p className="flex-auto text-lg font-semibold text-slate-900">
-                            {("00" + diff).slice(1)}
+                            {("000" + second).slice(-2)}s
                         </p>
                     </div>
                     <div className="flex space-x-4 mb-6 text-sm font-medium">
@@ -49,6 +73,7 @@ export const Room = () => {
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     );
