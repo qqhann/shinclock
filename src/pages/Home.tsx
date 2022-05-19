@@ -1,10 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useRooms } from "../hooks/room";
 
 export const Home = () => {
+  const navigate = useNavigate();
   const { create } = useRooms();
   const onCreateRoom = () => {
-    create();
+    create().then((res) => {
+      navigate(res.id);
+    });
   };
 
   return (

@@ -8,7 +8,7 @@ import {
 } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
-type Clock = {
+export type Clock = {
   name: string;
   running: boolean;
   start_at: Timestamp;
