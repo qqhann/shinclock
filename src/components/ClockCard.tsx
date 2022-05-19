@@ -19,7 +19,7 @@ export const ClockCard = (props: { clock: Clock }) => {
         intervalToDuration({ start: clock.start_at.toDate(), end: new Date() })
       );
     },
-    1000,
+    200,
     clock.running,
     true
   );
