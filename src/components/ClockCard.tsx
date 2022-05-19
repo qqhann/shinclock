@@ -1,10 +1,18 @@
 import React from "react";
-import { useToggle } from "rooks";
-import { Clock } from "~/hooks/clock";
+import { useIntervalWhen, useToggle } from "rooks";
+import { Clock } from "../hooks/clock";
 
 export const ClockCard = (props: { clock: Clock }) => {
   const { clock } = props;
   const [isOn, toggle] = useToggle();
+  useIntervalWhen(
+    () => {
+      // countDown()
+    },
+    1000,
+    isOn,
+    true
+  );
   return (
     <div className="flex font-sans">
       <div className="p-3 bg-white rounded-lg shadow-md">

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useIntervalWhen, useToggle } from "rooks";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useClocks } from "../hooks/clock";
 import { ClockCard } from "../components/ClockCard";
@@ -16,22 +15,12 @@ export const Room = () => {
    * format remaining to string
    * これで
    */
-  const [isOn, toggle] = useToggle();
   const { roomId } = useParams();
   const { clocks, create } = useClocks(roomId);
 
   useEffect(() => {
     console.log(roomId);
   }, [roomId]);
-
-  useIntervalWhen(
-    () => {
-      // countDown()
-    },
-    1000,
-    isOn,
-    true
-  );
 
   return (
     <div className="h-screen w-screen bg-slate-50">
