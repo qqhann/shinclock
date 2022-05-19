@@ -1,7 +1,8 @@
+
 import React, { useState } from "react";
 import { useIntervalWhen, useToggle } from "rooks";
 
-function App() {
+export const Home = ()=> {
   const start = new Date();
   const [diff, setDiff] = useState<number>(0);
   const [isOn, toggle] = useToggle();
@@ -16,7 +17,7 @@ function App() {
   );
 
   return (
-    <div className="h-full w-full bg-slate-300">
+    <div className="h-full">
       <h1 className="text-3xl">ShinClock</h1>
       <button onClick={toggle}>Toggle</button>
       <span>{diff}</span>
@@ -24,4 +25,3 @@ function App() {
   );
 }
 
-export default App;
