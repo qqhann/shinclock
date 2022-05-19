@@ -33,8 +33,8 @@ export const Room = () => {
       </div>
 
       <button onClick={create}>create clock</button>
-      {clocks?.map((clock, i) => (
-        <ClockCard clock={clock} key={i} />
+      {clocks?.map((clock) => (
+        <ClockCard clock={clock} key={clock.id} />
       ))}
     </div>
   );

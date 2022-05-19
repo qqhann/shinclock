@@ -4,14 +4,17 @@ import { Clock, useClock } from "../hooks/clock";
 
 export const ClockCard = (props: { clock: Clock }) => {
   const { clock } = props;
-  const { remove } = useClock(clock.ref);
-  const [isOn, toggle] = useToggle();
+  const { start, stop, remove } = useClock(clock.ref);
+  const toggle = () => {
+    if (clock.running) stop();
+    else start();
+  };
   useIntervalWhen(
     () => {
       // countDown()
     },
     1000,
-    isOn,
+    clock.running,
     true
   );
   return (
@@ -32,7 +35,7 @@ export const ClockCard = (props: { clock: Clock }) => {
               className="h-10 px-6 font-semibold rounded-md bg-black text-white"
               onClick={toggle}
             >
-              Start
+              {clock.running ? "Stop" : "Start"}
             </button>
             <button
               className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900"

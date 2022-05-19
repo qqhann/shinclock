@@ -10,6 +10,7 @@ import {
   setDoc,
   DocumentReference,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
@@ -72,9 +73,15 @@ export const useClocks = (roomId: string | undefined) => {
 };
 
 export const useClock = (ref: DocumentReference) => {
+  const start = () => {
+    updateDoc(ref, { running: true });
+  };
+  const stop = () => {
+    updateDoc(ref, { running: false });
+  };
   const remove = () => {
     deleteDoc(ref);
   };
 
-  return { remove };
+  return { start, stop, remove };
 };
