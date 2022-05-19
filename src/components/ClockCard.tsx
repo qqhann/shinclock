@@ -1,9 +1,10 @@
 import React from "react";
 import { useIntervalWhen, useToggle } from "rooks";
-import { Clock } from "../hooks/clock";
+import { Clock, useClock } from "../hooks/clock";
 
 export const ClockCard = (props: { clock: Clock }) => {
   const { clock } = props;
+  const { remove } = useClock(clock.ref);
   const [isOn, toggle] = useToggle();
   useIntervalWhen(
     () => {
@@ -36,8 +37,9 @@ export const ClockCard = (props: { clock: Clock }) => {
             <button
               className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900"
               type="button"
+              onClick={remove}
             >
-              Edit
+              Delete
             </button>
           </div>
         </div>

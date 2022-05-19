@@ -8,11 +8,14 @@ import {
   DocumentData,
   doc,
   setDoc,
+  DocumentReference,
+  deleteDoc,
 } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 export type Clock = {
   id: string;
+  ref: DocumentReference;
   name: string;
   running: boolean;
   start_at: Timestamp;
@@ -32,6 +35,7 @@ const clockConverter: FirestoreDataConverter<Clock> = {
     const data = snapshot.data();
     return {
       id: snapshot.id,
+      ref: snapshot.ref,
       name: data.name,
       running: data.running,
       start_at: data.start_at,
@@ -65,4 +69,12 @@ export const useClocks = (roomId: string | undefined) => {
   };
   const get = (id: string) => {};
   return { create, get, clocks };
+};
+
+export const useClock = (ref: DocumentReference) => {
+  const remove = () => {
+    deleteDoc(ref);
+  };
+
+  return { remove };
 };
