@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
+import { useInput } from "rooks";
+
 import { useClocks } from "../hooks/clock";
 import { ClockCard } from "../components/ClockCard";
 
@@ -17,10 +19,7 @@ export const Room = () => {
    */
   const { roomId } = useParams();
   const { clocks, create } = useClocks(roomId);
-
-  useEffect(() => {
-    console.log(roomId);
-  }, [roomId]);
+  const newClockName = useInput("New clock");
 
   return (
     <div className="h-screen w-screen bg-slate-50">
@@ -32,7 +31,20 @@ export const Room = () => {
         </div>
       </div>
 
-      <button onClick={create}>create clock</button>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          create({ name: newClockName.value });
+        }}
+      >
+        <input className="h-10 px-6 rounded-md border-2" {...newClockName} />
+        <input
+          type="submit"
+          value="create clock"
+          className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900"
+        />
+      </form>
+
       {clocks?.map((clock) => (
         <ClockCard clock={clock} key={clock.id} />
       ))}

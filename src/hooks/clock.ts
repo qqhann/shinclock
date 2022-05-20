@@ -10,6 +10,7 @@ import {
   DocumentReference,
   deleteDoc,
   updateDoc,
+  PartialWithFieldValue,
 } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
@@ -66,7 +67,7 @@ export const useClocks = (roomId: string | undefined) => {
 
   const [clocks, loading, error, snapshot] = useCollectionData(clocksRef);
 
-  const create = () => {
+  const create = (specified: PartialWithFieldValue<Clock>) => {
     if (!roomId) return;
     return setDoc(
       doc(clocksRef),
@@ -76,6 +77,7 @@ export const useClocks = (roomId: string | undefined) => {
         start_at: Timestamp.now(),
         total_seconds: 5,
         seconds_passed: 0,
+        ...specified,
       },
       { merge: true }
     );
