@@ -20,7 +20,7 @@ export const ClockCard = (props: { clock: Clock }) => {
   useIntervalWhen(
     () => {
       const duration = secondsToDuration(
-        (Date.now() - clock.start_at.toMillis()) / 1000
+        clock.total_seconds - (Date.now() - clock.start_at.toMillis()) / 1000
       );
       console.log(duration);
       setDuration(duration);

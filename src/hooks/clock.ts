@@ -3,7 +3,6 @@ import {
   collection,
   Timestamp,
   FirestoreDataConverter,
-  serverTimestamp,
   WithFieldValue,
   DocumentData,
   doc,
@@ -73,9 +72,9 @@ export const useClocks = (roomId: string | undefined) => {
       doc(clocksRef),
       {
         name: "New clock",
-        running: true,
+        running: false,
         start_at: Timestamp.now(),
-        total_seconds: 60,
+        total_seconds: 5,
         seconds_passed: 0,
       },
       { merge: true }

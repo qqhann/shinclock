@@ -10,11 +10,11 @@ const HOUR_IN_SEC = 3600;
 const MINUTE_IN_SEC = 60;
 
 export const secondsToDuration = (seconds: number): Duration => {
-  const days = Math.floor(seconds / DAY_IN_SEC);
+  const days = Math.trunc(seconds / DAY_IN_SEC);
   seconds %= DAY_IN_SEC;
-  const hours = Math.floor(seconds / HOUR_IN_SEC);
+  const hours = Math.trunc(seconds / HOUR_IN_SEC);
   seconds %= HOUR_IN_SEC;
-  const minutes = Math.floor(seconds / MINUTE_IN_SEC);
+  const minutes = Math.trunc(seconds / MINUTE_IN_SEC);
   seconds %= MINUTE_IN_SEC;
   return { days, hours, minutes, seconds };
 };
