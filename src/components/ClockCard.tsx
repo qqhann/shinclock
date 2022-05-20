@@ -1,26 +1,32 @@
 import React, { useState } from "react";
 import { useIntervalWhen } from "rooks";
-import { intervalToDuration, Duration } from "date-fns";
 
+import { Duration, secondsToDuration } from "../utils/time";
 import { Clock, useClock } from "../hooks/clock";
 
 export const ClockCard = (props: { clock: Clock }) => {
   const { clock } = props;
-  const [duration, setDuration] = useState<Duration>({});
-  const { start, stop, remove } = useClock(clock.ref);
+  const [duration, setDuration] = useState<Duration>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+  const { start, stop, reset, remove } = useClock(clock);
   const toggle = () => {
     if (clock.running) stop();
     else start();
   };
   useIntervalWhen(
     () => {
-      if (!clock.start_at) return;
-      setDuration(
-        intervalToDuration({ start: clock.start_at.toDate(), end: new Date() })
+      const duration = secondsToDuration(
+        (Date.now() - clock.start_at.toMillis()) / 1000
       );
+      console.log(duration);
+      setDuration(duration);
     },
-    200,
-    clock.running,
+    100,
+    clock.running && !!clock.start_at,
     true
   );
   return (
@@ -41,6 +47,13 @@ export const ClockCard = (props: { clock: Clock }) => {
               onClick={toggle}
             >
               {clock.running ? "Stop" : "Start"}
+            </button>
+            <button
+              className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900"
+              type="button"
+              onClick={reset}
+            >
+              Reset
             </button>
             <button
               className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900"
