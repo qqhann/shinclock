@@ -3,22 +3,25 @@ import { useIntervalWhen } from "rooks";
 
 import { Duration, padZero, secondsToDuration } from "../utils/time";
 import { Clock, useClock } from "../hooks/clock";
+import { useNotification } from "../hooks/notification";
 
 const useClockCard = (clock: Clock) => {
   const [duration, setDuration] = useState<Duration>(
     secondsToDuration(clock.total_seconds - clock.seconds_passed)
   );
+  const { notify, reset: resetNotification } = useNotification(1);
   useEffect(() => {
     setDuration(secondsToDuration(clock.total_seconds - clock.seconds_passed));
   }, [clock]);
   const { start, stop, reset, remove } = useClock(clock);
   useIntervalWhen(
     () => {
-      const duration = secondsToDuration(
+      const seconds =
         clock.total_seconds -
-          clock.seconds_passed -
-          (Date.now() - clock.start_at.toMillis()) / 1000
-      );
+        clock.seconds_passed -
+        (Date.now() - clock.start_at.toMillis()) / 1000;
+      if (seconds < 0) notify("Timer ring");
+      const duration = secondsToDuration(seconds);
       setDuration(duration);
     },
     100,
@@ -29,7 +32,15 @@ const useClockCard = (clock: Clock) => {
     if (clock.running) stop();
     else start();
   };
-  return { duration, toggle, reset, remove };
+  return {
+    duration,
+    toggle,
+    reset: () => {
+      reset();
+      resetNotification();
+    },
+    remove,
+  };
 };
 
 export const ClockCard = (props: { clock: Clock }) => {
