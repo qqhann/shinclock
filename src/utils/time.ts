@@ -24,3 +24,7 @@ export const durationToSeconds = (duration: Duration): number => {
     days * DAY_IN_SEC + hours * HOUR_IN_SEC + minutes * MINUTE_IN_SEC + seconds
   );
 };
+
+export const padZero = (num: number): string => {
+  return String(num).padStart(2, "0");
+};

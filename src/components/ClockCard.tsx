@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useIntervalWhen } from "rooks";
 
-import { Duration, secondsToDuration } from "../utils/time";
+import { Duration, padZero, secondsToDuration } from "../utils/time";
 import { Clock, useClock } from "../hooks/clock";
 
 export const ClockCard = (props: { clock: Clock }) => {
@@ -22,7 +22,6 @@ export const ClockCard = (props: { clock: Clock }) => {
       const duration = secondsToDuration(
         clock.total_seconds - (Date.now() - clock.start_at.toMillis()) / 1000
       );
-      console.log(duration);
       setDuration(duration);
     },
     100,
@@ -37,7 +36,8 @@ export const ClockCard = (props: { clock: Clock }) => {
             {clock.name}
           </h1>
           <p className="flex-auto text-lg font-semibold text-slate-900">
-            {duration.hours}:{duration.minutes}:{duration.seconds}
+            {padZero(duration.hours)}:{padZero(duration.minutes)}:
+            {duration.seconds.toFixed(1).padStart(4, "0")}
           </p>
         </div>
         <div className="flex space-x-4 mb-6 text-sm font-medium">
