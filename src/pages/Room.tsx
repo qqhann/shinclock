@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useInput } from "rooks";
 
 import { useClocks } from "../hooks/clock";
@@ -24,7 +24,9 @@ export const Room = () => {
 
   return (
     <div className="h-screen w-screen bg-slate-50">
-      <h1 className="text-3xl">ShinClock</h1>
+      <Link to="/">
+        <h1 className="text-3xl">ShinClock</h1>
+      </Link>
 
       <div className="flex font-sans">
         <div className="flex-auto p-6">
@@ -43,11 +45,12 @@ export const Room = () => {
       >
         <input className="h-10 px-6 rounded-md border-2" {...newClockName} />
         <input className="h-10 px-6 rounded-md border-2" {...newClockMinutes} />
-        <input
+        <button
           type="submit"
-          value="create clock"
           className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900"
-        />
+        >
+          create clock
+        </button>
       </form>
 
       {clocks?.map((clock) => (
