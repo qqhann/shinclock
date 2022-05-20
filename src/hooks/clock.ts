@@ -88,13 +88,15 @@ export const useClock = (clock: Clock) => {
   const start = () => {
     updateDoc(clock.ref, { running: true, start_at: Timestamp.now() });
   };
-  const stop = (seconds_passed: number) => {
+  const stop = () => {
+    const seconds_passed =
+      clock.seconds_passed + (Date.now() - clock.start_at.toMillis()) / 1000;
     updateDoc(clock.ref, { running: false, seconds_passed });
   };
   const reset = () => {
     updateDoc(clock.ref, {
       running: false,
-      seconds_passed: clock.total_seconds,
+      seconds_passed: 0,
     });
   };
   const remove = () => {

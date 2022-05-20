@@ -4,20 +4,13 @@ import { useIntervalWhen } from "rooks";
 import { Duration, padZero, secondsToDuration } from "../utils/time";
 import { Clock, useClock } from "../hooks/clock";
 
-export const ClockCard = (props: { clock: Clock }) => {
-  const { clock } = props;
-  const [duration, setDuration] = useState<Duration>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+const useClockCard = (clock: Clock) => {
+  const [duration, setDuration] = useState<Duration>(
+    secondsToDuration(clock.total_seconds - clock.seconds_passed)
+  );
   const { start, stop, reset, remove } = useClock(clock);
   const toggle = () => {
-    if (clock.running)
-      stop(
-        clock.seconds_passed + (Date.now() - clock.start_at.toMillis()) / 1000
-      );
+    if (clock.running) stop();
     else start();
   };
   useIntervalWhen(
@@ -33,6 +26,12 @@ export const ClockCard = (props: { clock: Clock }) => {
     clock.running && !!clock.start_at,
     true
   );
+  return { duration, toggle, reset, remove };
+};
+
+export const ClockCard = (props: { clock: Clock }) => {
+  const { clock } = props;
+  const { duration, toggle, reset, remove } = useClockCard(clock);
   return (
     <div className="flex font-sans">
       <div className="p-3 bg-white rounded-lg shadow-md">
