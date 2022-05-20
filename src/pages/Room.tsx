@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { useInput } from "rooks";
 
+import { useRoom } from "../hooks/room";
 import { useClocks } from "../hooks/clock";
 import { ClockCard } from "../components/ClockCard";
 
@@ -18,10 +19,12 @@ export const Room = () => {
    * これで
    */
   const { roomId } = useParams();
+  const { room, loading } = useRoom(roomId);
   const { clocks, create } = useClocks(roomId);
   const newClockName = useInput("New clock");
   const newClockMinutes = useInput(25);
 
+  if (loading) return <>Loading...</>;
   return (
     <div className="h-screen w-screen bg-slate-50">
       <Link to="/">
@@ -30,7 +33,7 @@ export const Room = () => {
 
       <div className="flex font-sans">
         <div className="flex-auto p-6">
-          <p>{roomId}</p>
+          <p>{room?.name}</p>
         </div>
       </div>
 

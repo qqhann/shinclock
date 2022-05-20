@@ -10,6 +10,7 @@ import {
   setDoc,
   PartialWithFieldValue,
 } from "firebase/firestore";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 
 export type Room = {
   id: string;
@@ -37,13 +38,15 @@ export const roomsRef = collection(db, "rooms").withConverter(roomConverter);
 export const useRooms = () => {
   const create = async (specified: PartialWithFieldValue<Room>) => {
     const docRef = doc(roomsRef);
-    await setDoc(
-      doc(roomsRef),
-      { name: "New clock", ...specified },
-      { merge: true }
-    );
+    await setDoc(docRef, { name: "New clock", ...specified }, { merge: true });
     return docRef;
   };
   const get = (id: string) => {};
   return { create, get };
+};
+
+export const useRoom = (roomId: string | undefined) => {
+  const roomRef = doc(roomsRef, roomId ?? "_");
+  const [room, loading, error, snapshot] = useDocumentData(roomRef);
+  return { room, loading };
 };
