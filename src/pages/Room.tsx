@@ -20,6 +20,7 @@ export const Room = () => {
   const { roomId } = useParams();
   const { clocks, create } = useClocks(roomId);
   const newClockName = useInput("New clock");
+  const newClockMinutes = useInput(25);
 
   return (
     <div className="h-screen w-screen bg-slate-50">
@@ -34,10 +35,14 @@ export const Room = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          create({ name: newClockName.value });
+          create({
+            name: newClockName.value,
+            total_seconds: newClockMinutes.value * 60,
+          });
         }}
       >
         <input className="h-10 px-6 rounded-md border-2" {...newClockName} />
+        <input className="h-10 px-6 rounded-md border-2" {...newClockMinutes} />
         <input
           type="submit"
           value="create clock"
