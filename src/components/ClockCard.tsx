@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntervalWhen } from "rooks";
 
 import { Duration, padZero, secondsToDuration } from "../utils/time";
@@ -8,11 +8,10 @@ const useClockCard = (clock: Clock) => {
   const [duration, setDuration] = useState<Duration>(
     secondsToDuration(clock.total_seconds - clock.seconds_passed)
   );
+  useEffect(() => {
+    setDuration(secondsToDuration(clock.total_seconds - clock.seconds_passed));
+  }, [clock]);
   const { start, stop, reset, remove } = useClock(clock);
-  const toggle = () => {
-    if (clock.running) stop();
-    else start();
-  };
   useIntervalWhen(
     () => {
       const duration = secondsToDuration(
@@ -26,6 +25,10 @@ const useClockCard = (clock: Clock) => {
     clock.running && !!clock.start_at,
     true
   );
+  const toggle = () => {
+    if (clock.running) stop();
+    else start();
+  };
   return { duration, toggle, reset, remove };
 };
 
