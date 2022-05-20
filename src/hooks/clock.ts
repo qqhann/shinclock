@@ -88,8 +88,8 @@ export const useClock = (clock: Clock) => {
   const start = () => {
     updateDoc(clock.ref, { running: true, start_at: Timestamp.now() });
   };
-  const stop = () => {
-    updateDoc(clock.ref, { running: false });
+  const stop = (seconds_passed: number) => {
+    updateDoc(clock.ref, { running: false, seconds_passed });
   };
   const reset = () => {
     updateDoc(clock.ref, {

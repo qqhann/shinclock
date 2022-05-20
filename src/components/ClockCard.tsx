@@ -14,13 +14,18 @@ export const ClockCard = (props: { clock: Clock }) => {
   });
   const { start, stop, reset, remove } = useClock(clock);
   const toggle = () => {
-    if (clock.running) stop();
+    if (clock.running)
+      stop(
+        clock.seconds_passed + (Date.now() - clock.start_at.toMillis()) / 1000
+      );
     else start();
   };
   useIntervalWhen(
     () => {
       const duration = secondsToDuration(
-        clock.total_seconds - (Date.now() - clock.start_at.toMillis()) / 1000
+        clock.total_seconds -
+          clock.seconds_passed -
+          (Date.now() - clock.start_at.toMillis()) / 1000
       );
       setDuration(duration);
     },
