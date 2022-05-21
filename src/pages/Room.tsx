@@ -5,19 +5,9 @@ import { useInput } from "rooks";
 import { useRoom } from "../hooks/room";
 import { useClocks } from "../hooks/clock";
 import { ClockCard } from "../components/ClockCard";
+import { FirestoreInput } from "../components/FirestoreInput";
 
 export const Room = () => {
-  /*
-   * Clock
-   * running
-   * start time
-   * total seconds
-   *
-   * useIntervalWhen
-   * remaining = total seconds - (now - start)
-   * format remaining to string
-   * これで
-   */
   const { roomId } = useParams();
   const { room, loading } = useRoom(roomId);
   const { clocks, create } = useClocks(roomId);
@@ -33,7 +23,7 @@ export const Room = () => {
 
       <div className="flex font-sans">
         <div className="flex-auto p-6">
-          <p>{room?.name}</p>
+          {room && <FirestoreInput doc={room} field="name" />}
         </div>
       </div>
 
