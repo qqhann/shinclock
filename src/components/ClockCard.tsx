@@ -4,6 +4,7 @@ import { useIntervalWhen } from "rooks";
 import { Duration, padZero, secondsToDuration } from "../utils/time";
 import { Clock, useClock } from "../hooks/clock";
 import { useNotification } from "../hooks/notification";
+import { FirestoreInput } from "./FirestoreInput";
 
 const useClockCard = (clock: Clock) => {
   const [duration, setDuration] = useState<Duration>(
@@ -51,7 +52,7 @@ export const ClockCard = (props: { clock: Clock }) => {
       <div className="p-3 bg-white rounded-lg shadow-md">
         <div className="flex flex-wrap">
           <h1 className="flex-auto text-lg font-semibold text-slate-900">
-            {clock.name}
+            <FirestoreInput doc={clock} field="name" />
           </h1>
           <p className="flex-auto text-lg font-semibold text-slate-900">
             {padZero(duration.hours)}:{padZero(duration.minutes)}:
