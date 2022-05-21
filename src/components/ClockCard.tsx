@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useIntervalWhen } from "rooks";
 
+import { FirestoreInput } from "./FirestoreInput";
+
 import { Duration, padZero, secondsToDuration } from "../utils/time";
 import { Clock, useClock } from "../hooks/clock";
 import { useNotification } from "../hooks/notification";
-import { FirestoreInput } from "./FirestoreInput";
+import { useSoundEffects } from "../hooks/sound";
 
 const useClockCard = (clock: Clock) => {
   const [duration, setDuration] = useState<Duration>(
     secondsToDuration(clock.total_seconds - clock.seconds_passed)
   );
   const { notify, reset: resetNotification } = useNotification(1);
+  const { play, reset: resetSoundEffects } = useSoundEffects(1);
   useEffect(() => {
     setDuration(secondsToDuration(clock.total_seconds - clock.seconds_passed));
   }, [clock]);
@@ -21,7 +24,10 @@ const useClockCard = (clock: Clock) => {
         clock.total_seconds -
         clock.seconds_passed -
         (Date.now() - clock.start_at.toMillis()) / 1000;
-      if (seconds < 0) notify("Timer ring");
+      if (seconds < 0) {
+        notify("Timer ring");
+        play();
+      }
       const duration = secondsToDuration(seconds);
       setDuration(duration);
     },
@@ -39,6 +45,7 @@ const useClockCard = (clock: Clock) => {
     reset: () => {
       reset();
       resetNotification();
+      resetSoundEffects();
     },
     remove,
   };
