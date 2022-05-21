@@ -51,7 +51,7 @@ const useClockCard = (clock: Clock) => {
   };
 };
 
-export const ClockCard = (props: { clock: Clock }) => {
+export const ClockCard = React.memo((props: { clock: Clock }) => {
   const { clock } = props;
   const { duration, toggle, reset, remove } = useClockCard(clock);
   return (
@@ -93,4 +93,4 @@ export const ClockCard = (props: { clock: Clock }) => {
       </div>
     </div>
   );
-};
+});

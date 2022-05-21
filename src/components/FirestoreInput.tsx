@@ -4,13 +4,11 @@ import { useInput, useToggle } from "rooks";
 
 export const FirestoreInput = <
   T extends DocumentData & { ref: DocumentReference }
->({
-  doc,
-  field,
-}: {
+>(props: {
   doc: T;
   field: keyof T;
 }) => {
+  const { doc, field } = props;
   const [editing, toggle] = useToggle();
   const inputProps = useInput(doc[field]);
   const onBlur = () => {
@@ -18,13 +16,6 @@ export const FirestoreInput = <
     toggle(editing);
   };
 
-  return (
-    <>
-      {editing ? (
-        <input {...inputProps} onBlur={onBlur} />
-      ) : (
-        <span onClick={toggle}>{doc[field]}</span>
-      )}
-    </>
-  );
+  if (editing) return <input {...inputProps} onBlur={onBlur} />;
+  else return <span onClick={toggle}>{doc[field]}</span>;
 };
