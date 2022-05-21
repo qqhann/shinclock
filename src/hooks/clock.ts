@@ -14,14 +14,14 @@ import {
 } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
-/*
+/**
  * Clock
  * -----
- * name - The clock name
- * running - Is the clock running right now
- * start_at - The current run started at
- * seconds_passed - Seconds remaining until end
- * total_seconds - Total of the timer in seconds
+ * @property {string} name - The clock name
+ * @property {boolean} running - Is the clock running right now
+ * @property {Timestamp} start_at - The current run started at
+ * @property {number} seconds_passed - Seconds remaining until end
+ * @property {number} total_seconds - Total of the timer in seconds
  */
 export type Clock = {
   id: string;

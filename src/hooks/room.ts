@@ -1,7 +1,6 @@
 import { db } from "../api/firebase";
 import {
   collection,
-  addDoc,
   DocumentReference,
   FirestoreDataConverter,
   WithFieldValue,
@@ -12,6 +11,11 @@ import {
 } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 
+/**
+ * Room
+ * ----
+ * @property {string} name - Room name
+ */
 export type Room = {
   id: string;
   ref: DocumentReference;
