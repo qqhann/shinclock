@@ -37,7 +37,11 @@ const useClockCard = (clock: Clock) => {
   );
   const toggle = () => {
     if (clock.running) stop();
-    else start();
+    else {
+      notify("Timer start");
+      play();
+      start();
+    }
   };
   return {
     duration,
