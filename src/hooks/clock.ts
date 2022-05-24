@@ -1,4 +1,4 @@
-import { db } from "../api/firebase";
+import { db } from "src/api/firebase";
 import {
   collection,
   Timestamp,

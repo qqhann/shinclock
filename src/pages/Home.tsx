@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useInput } from "rooks";
-import { useRooms } from "../hooks/room";
+import { useRooms } from "src/hooks/room";
 
 export const Home = () => {
   const navigate = useNavigate();

@@ -3,10 +3,10 @@ import { useIntervalWhen } from "rooks";
 
 import { FirestoreInput } from "./FirestoreInput";
 
-import { Duration, padZero, secondsToDuration } from "../utils/time";
-import { Clock, useClock } from "../hooks/clock";
-import { useNotification } from "../hooks/notification";
-import { useSoundEffects } from "../hooks/sound";
+import { Duration, padZero, secondsToDuration } from "src/utils/time";
+import { Clock, useClock } from "src/hooks/clock";
+import { useNotification } from "src/hooks/notification";
+import { useSoundEffects } from "src/hooks/sound";
 
 const useClockCard = (clock: Clock) => {
   const [duration, setDuration] = useState<Duration>(

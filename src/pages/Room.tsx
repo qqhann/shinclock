@@ -2,10 +2,10 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { useInput } from "rooks";
 
-import { useRoom } from "../hooks/room";
-import { useClocks } from "../hooks/clock";
-import { ClockCard } from "../components/ClockCard";
-import { FirestoreInput } from "../components/FirestoreInput";
+import { useRoom } from "src/hooks/room";
+import { useClocks } from "src/hooks/clock";
+import { ClockCard } from "src/components/ClockCard";
+import { FirestoreInput } from "src/components/FirestoreInput";
 
 export const Room = () => {
   const { roomId } = useParams();
