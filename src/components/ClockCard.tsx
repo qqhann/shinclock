@@ -12,8 +12,8 @@ const useClockCard = (clock: Clock) => {
   const [duration, setDuration] = useState<Duration>(
     secondsToDuration(clock.total_seconds - clock.seconds_passed)
   );
-  const { notify, reset: resetNotification } = useNotification(1);
-  const { play, reset: resetSoundEffects } = useSoundEffects(1);
+  const { notify, reset: resetNotification } = useNotification(100);
+  const { play, reset: resetSoundEffects } = useSoundEffects(100);
   useEffect(() => {
     setDuration(secondsToDuration(clock.total_seconds - clock.seconds_passed));
   }, [clock]);
@@ -24,7 +24,7 @@ const useClockCard = (clock: Clock) => {
         clock.total_seconds -
         clock.seconds_passed -
         (Date.now() - clock.start_at.toMillis()) / 1000;
-      if (seconds < 0) {
+      if (seconds < 0 && -1 < seconds) {
         notify("Timer ring");
         play();
       }
