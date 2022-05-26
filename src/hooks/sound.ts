@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useSound from "use-sound";
 
 const sfxA = "/assets/sounds/mixkit-bell-sound-with-delay-585.wav";
@@ -10,16 +9,10 @@ const sfxF = "/assets/sounds/mixkit-melodic-classic-door-bell-111.wav";
 const sfxG = "/assets/sounds/mixkit-service-bell-double-ding-588.wav";
 const sfxH = "/assets/sounds/mixkit-small-door-bell-589.wav";
 
-export const useSoundEffects = (maxCount: number) => {
-  const [count, setCount] = useState<number>(maxCount);
+export const useSoundEffects = () => {
   const [playSound] = useSound(sfxA);
   const play = () => {
-    if (count <= 0) return;
     playSound();
-    setCount((curr) => curr - 1);
   };
-  const reset = () => {
-    setCount(maxCount);
-  };
-  return { play, reset };
+  return { play };
 };

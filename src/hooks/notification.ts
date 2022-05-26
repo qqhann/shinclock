@@ -1,13 +1,8 @@
-import { useState } from "react";
-
-export const useNotification = (maxCount: number) => {
-  const [count, setCount] = useState<number>(maxCount);
+export const useNotification = () => {
   const notify = (text: string) => {
-    if (count <= 0) return;
     switch (window.Notification.permission) {
       case "granted":
         new window.Notification(text);
-        setCount((curr) => curr - 1);
         break;
       case "default":
         window.Notification.requestPermission();
@@ -15,8 +10,5 @@ export const useNotification = (maxCount: number) => {
       default:
     }
   };
-  const reset = () => {
-    setCount(maxCount);
-  };
-  return { notify, reset };
+  return { notify };
 };
