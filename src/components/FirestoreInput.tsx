@@ -16,6 +16,6 @@ export const FirestoreInput = React.memo(
     };
 
     if (editing) return <input {...inputProps} onBlur={onBlur} autoFocus />;
-    else return <span onClick={toggle}>{doc[field]}</span>;
+    else return <span onClick={toggle}>{doc[field] ?? "NO_VALUE"}</span>;
   }
 );
