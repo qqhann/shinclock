@@ -20,6 +20,13 @@ const useClockCard = (clock: Clock) => {
   const { start, stop, reset, remove } = useClock(clock);
   useIntervalWhen(
     () => {
+      // When timer starts
+      const sinceTotal = (Date.now() - clock.start_at.toMillis()) / 1000;
+      if (sinceTotal >= 0 && 0.1 >= sinceTotal) {
+        notify("Timer start");
+        play();
+      }
+      // When timer ends
       const seconds =
         clock.total_seconds -
         clock.seconds_passed -
@@ -28,6 +35,7 @@ const useClockCard = (clock: Clock) => {
         notify("Timer ring");
         play();
       }
+
       const duration = secondsToDuration(seconds);
       setDuration(duration);
     },
