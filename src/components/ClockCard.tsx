@@ -66,6 +66,9 @@ export const ClockCard = React.memo((props: { clock: Clock }) => {
             <FirestoreInput doc={clock} field="name" />
           </h1>
           <p className="flex-auto text-lg font-semibold text-slate-900">
+            ({clock.num_resets})
+          </p>
+          <p className="flex-auto text-lg font-semibold text-slate-900">
             {padZero(duration.hours)}:{padZero(duration.minutes)}:
             {duration.seconds.toFixed(1).padStart(4, "0")}
           </p>
