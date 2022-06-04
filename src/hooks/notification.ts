@@ -1,5 +1,8 @@
+import { isMobile } from "react-device-detect";
+
 export const useNotification = () => {
   const notify = (text: string) => {
+    if (isMobile) return;
     switch (window.Notification.permission) {
       case "granted":
         new window.Notification(text);
