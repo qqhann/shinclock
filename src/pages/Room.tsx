@@ -7,6 +7,7 @@ import { useClocks } from "src/hooks/clock";
 import { ClockCard } from "src/components/ClockCard";
 import { FirestoreInput } from "src/components/FirestoreInput";
 import { Container } from "src/components/Container";
+import { Header } from "src/components/Header";
 
 export const Room = () => {
   const { roomId } = useParams();
@@ -18,9 +19,7 @@ export const Room = () => {
   if (loading) return <>Loading...</>;
   return (
     <Container>
-      <Link to="/">
-        <h1 className="text-3xl">ShinClock</h1>
-      </Link>
+      <Header />
 
       <div className="flex font-sans">
         <div className="flex-auto p-6">

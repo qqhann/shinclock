@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useInput } from "rooks";
 import { Container } from "src/components/Container";
+import { Header } from "src/components/Header";
 import { useRooms } from "src/hooks/room";
 
 export const Home = () => {
@@ -11,7 +12,7 @@ export const Home = () => {
 
   return (
     <Container>
-      <h1 className="text-3xl">ShinClock</h1>
+      <Header />
 
       <form
         onSubmit={(e) => {
