@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useInput } from "rooks";
+import { Container } from "src/components/Container";
 import { useRooms } from "src/hooks/room";
 
 export const Home = () => {
@@ -9,7 +10,7 @@ export const Home = () => {
   const newRoomName = useInput();
 
   return (
-    <div className="h-full">
+    <Container>
       <h1 className="text-3xl">ShinClock</h1>
 
       <form
@@ -32,6 +33,6 @@ export const Home = () => {
           Create new room
         </button>
       </form>
-    </div>
+    </Container>
   );
 };

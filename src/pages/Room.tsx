@@ -6,6 +6,7 @@ import { useRoom } from "src/hooks/room";
 import { useClocks } from "src/hooks/clock";
 import { ClockCard } from "src/components/ClockCard";
 import { FirestoreInput } from "src/components/FirestoreInput";
+import { Container } from "src/components/Container";
 
 export const Room = () => {
   const { roomId } = useParams();
@@ -16,7 +17,7 @@ export const Room = () => {
 
   if (loading) return <>Loading...</>;
   return (
-    <div className="h-screen w-screen bg-slate-50">
+    <Container>
       <Link to="/">
         <h1 className="text-3xl">ShinClock</h1>
       </Link>
@@ -49,6 +50,6 @@ export const Room = () => {
       {clocks?.map((clock) => (
         <ClockCard clock={clock} key={clock.id} />
       ))}
-    </div>
+    </Container>
   );
 };
