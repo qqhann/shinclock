@@ -31,7 +31,7 @@ const useClockCard = (clock: Clock) => {
         clock.total_seconds -
         clock.seconds_passed -
         (Date.now() - clock.start_at.toMillis()) / 1000;
-      if (seconds <= 0 && -0.199 <= seconds) {
+      if (seconds <= 0 && -0.1 <= seconds) {
         notify("Timer ring");
         play();
       }
