@@ -1,8 +1,8 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useInput } from "rooks";
 
-import { useRoom } from "src/hooks/room";
+import { useRoom, useRooms } from "src/hooks/room";
 import { useClocks } from "src/hooks/clock";
 import { ClockCard } from "src/components/ClockCard";
 import { FirestoreInput } from "src/components/FirestoreInput";
@@ -15,8 +15,18 @@ export const Room = () => {
   const { clocks, create } = useClocks(roomId);
   const newClockName = useInput("New clock");
   const newClockMinutes = useInput(25);
+  const { create: createRoom } = useRooms();
 
   if (loading) return <>Loading...</>;
+  if (!loading && !room)
+    return (
+      <div>
+        <h1>404 Room not found</h1>
+        <button onClick={() => createRoom({ id: roomId, name: roomId })}>
+          Create room with id {roomId}
+        </button>
+      </div>
+    );
   return (
     <Container>
       <Header />

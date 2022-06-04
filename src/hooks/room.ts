@@ -40,8 +40,8 @@ const roomConverter: FirestoreDataConverter<Room> = {
 export const roomsRef = collection(db, "rooms").withConverter(roomConverter);
 
 export const useRooms = () => {
-  const create = async (specified: PartialWithFieldValue<Room>) => {
-    const docRef = doc(roomsRef);
+  const create = async (specified: Partial<Room>) => {
+    const docRef = doc(roomsRef, specified.id);
     await setDoc(docRef, { name: "New clock", ...specified }, { merge: true });
     return docRef;
   };
